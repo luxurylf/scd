@@ -80,8 +80,8 @@
   </div>
 </section>
 <section class="image_P"></section>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/111.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/111.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
 </div>
 <div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
     Fig. 1. The tactile exploration process is used for object shape estimation.
@@ -99,6 +99,21 @@
   </p>
 </div>
 </section>
+<section class="Intro">
+  <div class="content has-text-justified"  style="text-align: justify; font-size: 20px;">
+    <p>
+      Automated measurement and three-dimensional (3D) reconstruction are key for robots to perform operational tasks. Robots can use different sensors to acquire 
+      information about objects or the environment [1],[2]. Vision cameras can often provide robots with rich sensing data [3],[4]. However, in certain environments, 
+      such as darkness or smoke, the perception capabilities of vision cameras may be limited. More specifically, the tactile perception is attractive in special scenarios 
+      such as oil well scenarios [5] and rescue scene after fire. In these cases, robots can sense their surroundings through tactile sensors, which provide accurate information
+      about objects through physical contact [6]. Our paper focuses on how to achieve shape reconstruction of objects using tactile perception. Manipulation tasks that relate
+      to three-dimensional (3D) shape estimation using tactile sensors are often called tactile exploration. <br/>
+      _______________________________________________________________________________________________________<br/>
+      We utilize a UR5 for tactile exploration in PyBullet and in practice.
+    </p>
+  </div>
+  </section>
+
 <section class="image"></section>
 <!-- <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">  
   <img src="./static/figures/111.jpg" alt="Centered Image" style="max-width: 100%; max-height: 100%;"/>  
@@ -106,35 +121,35 @@
 <div class="content has-text-justified"  style="text-align: center; font-size: 30px;">
     Fig. 1. The tactile exploration process is used for object shape estimation.
 </div> -->
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/simulation1.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/simulation1.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
 </div>
 <div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
     Fig. 2. Simulation data and results for duck model.
 </div>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/simulation2.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/simulation2.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
 </div>
 <div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
     Fig. 3. Simulation data and results for other model.
 </div>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/object.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/object.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
 </div>
 <div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
     Fig. 4. Objects in experiments .
 </div>
 </section>
 </div>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/experience1.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/experience1.jpg" alt="Centered Image" style="max-width: 50%; max-height: 80%;"/>  
 </div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
+<div class="content has-text-justified"  style="text-align: center; font-size: 80px;">
     Fig. 5. Experiments results for cube and cylinder.
 </div>
 </section>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/experience2.jpg" alt="Centered Image" style="max-width: 50%; max-height: 50%;"/>  
+<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
+  <img src="./static/figures/experience2.jpg" alt="Centered Image" style="max-width: 50%; max-height: 80%;"/>  
 </div>
 <div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
     Fig. 6. Experiments results for bottle.
@@ -162,11 +177,11 @@
       main parts: 1) a data augmentation method suitable for tactile exploration that can effectively deal with the sparsity of tactile data; and 2) a comprehensive active 
       exploration strategy that adapts to the situation of sparse and unevenly distributed data at the beginning of exploration. We validated the proposed method through 
       experiments and simulations. Compared to other methods, our method improves the model accuracy by 35.03% for HD with the same sampling steps. We also applied the proposed 
-      method to object recognition. We could get 80% accuracy after 10 explorations. In practical applications, a robot would first collect several initial pieces of data about 
-      the object and determine the exploration area by performing random touches. Then, it can complete the modeling of the object based on the proposed method. Finally, we will 
+      method to object recognition. We could get 80% accuracy after 10 explorations.<br/>
+      In practical applications, a robot would first collect several initial pieces of data about the object and determine the exploration area by performing random touches. Then, it can complete the modeling of the object based on the proposed method. Finally, we will 
       get an acceptable shape estimate. This process provides a cognitive foundation for the subsequent manipulation of objects by the robot. The proposed method is not limited
-      to the GelSight sensor used in our experiments. In the next step, we will investigate robotic object grasping operations based on reconstruction results. The GelSight used 
-      for the experiments already has strong tactile sensing capabilities. However, due to its size, it can be limited for touch on complex objects, especially locations where 
+      to the GelSight sensor used in our experiments. In the next step, we will investigate robotic object grasping operations based on reconstruction results.<br/>
+      The GelSight used for the experiments already has strong tactile sensing capabilities. However, due to its size, it can be limited for touch on complex objects, especially locations where 
       space is tight, such as the back of a handle on a mug. In the future, we plan to conduct experiments using sensors that are small and easy to mount on robots.
       
     </p>
