@@ -1,220 +1,519 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Practical Tactile Exploration with Enhanced Sampling for Fast Shape Estimation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #aa2a5bff;
+            --diffusion-purple: #5048aaff;
+            --robot-orange: #9554ffff;
+            --light-bg: #F8F9FA;
+        }
+        .custom-lead {
+        font-size: 1.0rem;    /* 默认1.25rem */
+        line-height: 1.0;      /* 默认1.5 */
+        letter-spacing: 0.03em;/* 字母间距 */
+        max-width: 100%;        /* 控制文本行宽 */
+        margin: 0 auto 1.5rem; /* 居中+下边距 */
+       }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--diffusion-purple) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-banner::before {
+            content: "";
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon fill="rgba(255,255,255,0.05)" points="0,100 100,0 100,100"/></svg>');
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--robot-orange);
+        }
+        
+        .feature-card {
+            border-left: 4px solid var(--primary-blue);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .metric-badge {
+            background: var(--diffusion-purple);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .comparison-slider {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .comparison-slider img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 8px;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .img-container {
+    transition: transform 0.2s;
+    background: #f8f9fa;
+}
+.img-container:hover {
+    transform: translateY(-2px);
+}
+.caption {
+    line-height: 1.2;
+    opacity: 0.9;
+}
+        .scrollable-illustration {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+.scrollable-illustration::-webkit-scrollbar {
+    height: 8px;
+}
+.scrollable-illustration::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+#methodology {
+    --content-max-width: 1440px;  /* 控制最大显示宽度 */
+}
 
-  <title>Website Title</title>
+#methodology .container-fluid {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+}
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDF010G6PN"></script>
-  <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+#methodology .card-img-top {
+    padding: 0 2rem;  /* 图片两侧留白 */
+}
+@media (max-width: 768px) {
+    .abstract-container {
+        column-count: 1 !important;
+    }
+    .illustration-container {
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+}
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 2rem 0;
+            }
+        }
 
-  gtag('config', 'G-EDF010G6PN');
-  </script>
-
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="./static/slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="./static/slick/slick-theme.css"/>
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+    
+    </style>
 </head>
 <body>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" style="text-align: center; font-size: 20px;">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://github.com/luxurylf" style="text-align: center; font-size: 20px;">
-            Tactile Exploration
-          </a>
+    <style>
+        /* 自定义标题样式 */
+        .hero-banner h1 {
+            font-size: 4.5rem !important;  /* 主标题字号放大 */
+            letter-spacing: -0.05em;      /* 字母间距微调 */
+            margin-bottom: 1.5rem !important;
+        }
+        
+        /* 作者列表强化 */
+        .author-list span {
+            font-size: 1.25rem;           /* 作者名字体放大 */
+            font-weight: 500;             /* 中等字重 */
+            padding: 0.35rem 0.75rem;     /* 增加呼吸空间 */
+            background: rgba(255,255,255,0.1); /* 浅色背景衬底 */
+            border-radius: 0.5rem;         /* 圆角效果 */
+            transition: transform 0.2s;    /* 悬互动效果 */
+        }
+        
+        .author-list span:hover {
+            transform: translateY(-2px);   /* 悬停微抬效果 */
+        }
+        
+        /* 适应移动端 */
+        @media (max-width: 768px) {
+            .hero-banner h1 {
+                font-size: 3rem !important;
+            }
+            .author-list span {
+                font-size: 1rem;
+                padding: 0.25rem 0.5rem;
+            }
+        }
+        </style>
+        
+        <section class="hero-banner text-center">
+            <div class="container position-relative" style="z-index: 1;">
+                <!-- 强化主标题 -->
+                <h1 class="display-2 fw-bold mb-4">Tactile Reconstruction</h1>
+                <p class="lead mb-4 fs-3">A Practical Tactile Exploration with Enhanced Sampling for Fast Shape Estimation</p>
+        
+                <!-- 层级化作者信息 -->
+                <div class="author-list mb-5">
+                    <div class="d-flex flex-wrap justify-content-center gap-4">  <!-- 增加间距 -->
+                        <span>Feng Luan<sup>1</sup></span>
+                        <span>Chengjin Wang<sup>1</sup></span>
+                        <span>Zhipeng Wang<sup>1</sup></span>
+                        <span>Jiguang Yue<sup>1</sup></span>
+                        <span class="text-warning">Yanmin Zhou<sup>1,*</sup></span>
+                        <span>He Bin<sup>1</sup></span>
+                    </div>
+                    <div class="affiliation mt-3 fs-5">  <!-- 机构信息放大 -->
+                        <sup>1</sup>Tongji University &nbsp;|&nbsp; 
+                        <sup>*</sup>Corresponding Author: yanmin.zhou@tongji.edu.cn
+                    </div>
+                </div>
+                
+                <!-- 按钮组 -->
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0263224125007092" class="btn btn-light btn-lg px-4 py-2 rounded-pill">📄 Paper</a>
+                    
+                </div>
+            </div>
+        </section>
+
+    <section class="py-5">
+        <div class="container">
+            <!-- 摘要文本区块 -->
+            <div class="abstract-container mb-5">
+                <h2 class="display-5 mb-4 border-bottom pb-3">Abstract</h2>
+                <div class="fs-5 lh-base" style="column-count: 1; column-gap: 2rem">
+                    Automated measurement and three-dimensional reconstruction help robots to 
+                    understand complex environments. In situations of darkness or smoke, tactile 
+                    perception is pivotal.  Here, we propose a tactile exploration method to 
+                    estimate the shape of objects with Gaussian process implicit surfaces 
+                    (GPIS), especially considering the sparsity and unevenness nature
+                    of tactile data. A data enhancement method is employed to improve the 
+                    data integrity of tactile exploration for the implicit surface construction,
+                    which combines the external and internal  position information of the object.
+                    In addition, a practical sampling strategy is constructed to improve the 
+                    reconstruction efficiency limited by the nonuniform distribution of tactile 
+                    data. This strategy considers the local data sparsity, shape uncertainty, 
+                    local shape curvature, and exploration path cost for systematic and comprehensive 
+                    data collection. Simulation and experiment results show that our method improves 
+                    the model accuracy by 35.03% in the Hausdorff distance with the same sampling steps 
+                    compared to other methods. 
+                </div>
+            </div>
+    
+            <div class="illustration-container bg-light rounded-4 p-4 shadow-lg">
+                <!-- 响应式滚动容器 -->
+                <div class="scrollable-illustration" style="max-height: 70vh; overflow-y: auto">
+                    <img src="./static/figures/intro.png" 
+                         alt="Framework" 
+                         class="img-fluid w-auto d-block mx-auto"
+                         style="min-width: 1200px; transform: translateZ(0)"
+                         loading="lazy">
+                </div>
+            </div>
+            
+    
+               
+    
+            <!-- 关键点卡片（全宽） -->
+            <h3 class="display-5 mb-4 border-bottom pb-3">Key point</h3>
+            <div class="row mt-4">
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="feature-card p-3 h-100">
+                        <h5><span class="badge metric-badge me-2">1</span> Tactile perception</h5>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="feature-card p-3 h-100">
+                        <h5><span class="badge metric-badge me-2">2</span> Data enhancement</h5>
+                       
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="feature-card p-3 h-100">
+                        <h5><span class="badge metric-badge me-2">3</span> Gaussian process</h5>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="feature-card p-3 h-100">
+                        <h5><span class="badge metric-badge me-2">4</span>Shape estimation</h5>
+                        
+                    </div>
+                </div>
+                
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- Key Results -->
+    
+
+ <!-- Methodology -->
+<section class="py-5" id="methodology">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Method and some results</h2>
+        <div class="row justify-content-center">
+                <div class="col-12 col-xl-10 col-xxl-9">  <!-- 增加列宽层级 -->
+                <!-- 导航选项卡 -->
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-pills justify-content-center mb-4" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" data-bs-toggle="tab" 
+                                    data-bs-target="#overview" type="button">
+                                Overview
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" 
+                                    data-bs-target="#Simulation1" type="button">
+                                Simulation results for duck model
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" 
+                                    data-bs-target="#Simulation2" type="button">
+                                Simulation results for more model
+                            </button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-bs-toggle="tab" 
+                                    data-bs-target="#analysis" type="button">
+                                Result analysis
+                            </button>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+                <!-- 内容面板 -->
+                <div class="tab-content">
+                    <!-- Overview 面板 -->
+                    <div class="tab-pane fade show active" id="overview">
+                        <div class="card border-0 shadow">
+                            <img src="./static/figures/111.jpg" class="card-img-top" alt="System Overview">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The tactile exploration process is used for object shape estimation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Simulation1">
+                        <div class="card border-0 shadow">
+                            <img src="./static/figures/simulation1.jpg" class="card-img-top" alt="Simulation1">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The tactile exploration results for object shape estimation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    
+                    <div class="tab-pane fade" id="Simulation2">
+                        <div class="card border-0 shadow">
+                            <img src="./static/figures/simulation2.jpg" class="card-img-top" alt="Simulation2">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The tactile exploration results for object shape estimation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>     
+
+
+   
+                    <div class="tab-pane fade" id="analysis">
+                        <div class="card border-0 shadow">
+                            <img src="./static/figures/ANALYZE.png" class="card-img-top" alt="analysis">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    The tactile exploration result analysis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
-
-</body>
-</html>
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h1 class="title is-1 publication-title" style="text-align: center; font-size: 50px;">
-          A Practical Tactile Exploration with Enhanced Sampling for Fast Shape Estimation
-        </h1>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-  </div>
-</section>
-<section class="image_P"></section>
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
-  <img src="./static/figures/111.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 1. The tactile exploration process is used for object shape estimation.
-</div>
-</section>
-<section class="abj">
-<div class="content has-text-justified"  style="text-align: justify; font-size: 20px;">
-  <p>
-    Abstract: Automated measurement and three-dimensional reconstruction help robots to understand complex environments. In situations of darkness or smoke, tactile perception is pivotal. 
-    Here, we propose a tactile exploration method to estimate the shape of objects with Gaussian process implicit surfaces (GPIS), especially considering the sparsity and unevenness nature
-    of tactile data. A data enhancement method is employed to improve the data integrity of tactile exploration for the implicit surface construction, which combines the external and internal 
-    position information of the object. In addition, a practical sampling strategy is constructed to improve the reconstruction efficiency limited by the nonuniform distribution of tactile 
-    data. This strategy considers the local data sparsity, shape uncertainty, local shape curvature, and exploration path cost for systematic and comprehensive data collection. Simulation 
-    and experiment results show that our method improves the model accuracy by 35.03% in the Hausdorff distance with the same sampling steps compared to other methods. 
-  </p>
-</div>
-</section>
-<section class="Intro">
-  <div class="column is-four-fifths">
-    <h1 class="title is-1 publication-title" style="font-size: 20px;">
-      Introduction 
-    </h1>
-  </div>
-  <div class="content has-text-justified"  style="text-align: justify; font-size: 20px;">
-    <p>
-      Automated measurement and three-dimensional (3D) reconstruction are key for robots to perform operational tasks. Robots can use different sensors to acquire 
-      information about objects or the environment [1],[2]. Vision cameras can often provide robots with rich sensing data [3],[4]. However, in certain environments, 
-      such as darkness or smoke, the perception capabilities of vision cameras may be limited. More specifically, the tactile perception is attractive in special scenarios 
-      such as oil well scenarios [5] and rescue scene after fire. In these cases, robots can sense their surroundings through tactile sensors, which provide accurate information
-      about objects through physical contact [6]. Our paper focuses on how to achieve shape reconstruction of objects using tactile perception. Manipulation tasks that relate
-      to three-dimensional (3D) shape estimation using tactile sensors are often called tactile exploration. <br/>
-      
-    </p>
-  </div>
-  <div class="column is-four-fifths">
-    <h1 class="title is-1 publication-title" style="font-size: 20px;">
-      Simulations and experiments 
-    </h1>
-  </div>
-  <div class="content has-text-justified"  style="text-align: justify; font-size: 20px;">
-    <p>
-      We utilize a UR5 for tactile exploration in PyBullet and in practice.<br/>
-      We have reconstructed a variety of objects in simulations and experiments. The effectiveness of our proposed method is demonstrated by comparing it with other state-of-the-art methods.
-    </p>
-  </div>
-  
 </section>
 
-<section class="image"></section>
-<!-- <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">  
-  <img src="./static/figures/111.jpg" alt="Centered Image" style="max-width: 100%; max-height: 100%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 30px;">
-    Fig. 1. The tactile exploration process is used for object shape estimation.
-</div> -->
-<div class="column is-four-fifths">
-  <h1 class="title is-1 publication-title" style="font-size: 20px;">
-    Simulations 
-  </h1>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
-  <img src="./static/figures/simulation1.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 2. Simulation data and results for duck model.
-</div>
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
-  <img src="./static/figures/simulation2.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 3. Simulation data and results for other model.
-</div>
-<div class="column is-four-fifths">
-  <h1 class="title is-1 publication-title" style="font-size: 20px;">
-    Experiments 
-  </h1>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; height: 50vh;">  
-  <img src="./static/figures/object.jpg" alt="Centered Image" style="max-width: 80%; max-height: 80%;"/>  
-</div>
 
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 4. Objects in experiments .
-</div>
-</section>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
-  <img src="./static/figures/experience1.jpg" alt="Centered Image" style="max-width:100%; max-height: 100%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 5. Experiments results for cube and cylinder.
-</div>
-</section>
-<div style="display: flex; justify-content: center; align-items: center; height: 80vh;">  
-  <img src="./static/figures/experience2.jpg" alt="Centered Image" style="max-width: 50%; max-height: 80%;"/>  
-</div>
-<div class="content has-text-justified"  style="text-align: center; font-size: 20px;">
-    Fig. 6. Experiments results for bottle.
-</div>
-</section>
-<section class="experience">
-<div class="column is-four-fifths">
-  <h1 class="title is-1 publication-title" style=" font-size: 20px;">
-  Vedio for Real World Experiments 
-  </h1>
-</div>
-</section>
-<section class="experiencevedio">
-<div style="display: flex; justify-content: center;">
-  <video autoplay controls muted loop playsinline style="width: 25%; justify-content: center;">
-    <source src="./static/videos/res.mp4" type="video/mp4">
-  </video>
-</div>
-</section>
 
-<section class="conclusion">
-  <div class="content has-text-justified"  style="text-align: justify; font-size: 20px;">
-    <p>
-      Conclusion: In this work, we propose a tactile exploration method to quickly accomplish 3D reconstruction of objects without visual or laser sensors. This method consists of two 
-      main parts: 1) a data augmentation method suitable for tactile exploration that can effectively deal with the sparsity of tactile data; and 2) a comprehensive active 
-      exploration strategy that adapts to the situation of sparse and unevenly distributed data at the beginning of exploration. We validated the proposed method through 
-      experiments and simulations. Compared to other methods, our method improves the model accuracy by 35.03% for HD with the same sampling steps. We also applied the proposed 
-      method to object recognition. We could get 80% accuracy after 10 explorations.<br/>
-      In practical applications, a robot would first collect several initial pieces of data about the object and determine the exploration area by performing random touches. Then, it can complete the modeling of the object based on the proposed method. Finally, we will 
-      get an acceptable shape estimate. This process provides a cognitive foundation for the subsequent manipulation of objects by the robot. The proposed method is not limited
-      to the GelSight sensor used in our experiments. In the next step, we will investigate robotic object grasping operations based on reconstruction results.<br/>
-      The GelSight used for the experiments already has strong tactile sensing capabilities. However, due to its size, it can be limited for touch on complex objects, especially locations where 
-      space is tight, such as the back of a handle on a mug. In the future, we plan to conduct experiments using sensors that are small and easy to mount on robots.
-      
-    </p>
-  </div>
-  </section>
+    
 
-<script type="text/javascript" src="./static/slick/slick.min.js"></script>
-</body>
-</html>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">More Experimental Results</h2>
+            
+            <div class="row g-4" style="align-items: stretch;"> <!-- 新增行对齐方式 -->
+                <!-- 左侧列 -->
+                <div class="col-md-6">
+                    <div class="d-flex flex-column h-80 gap-4"> <!-- 新增flex容器 -->
+                        <div class="card flex-grow-1">
+                            <div class="card-body">
+                                <h5 class="card-title">Objects in world</h5>
+                                <div class="text-center h-100 d-flex flex-column">
+                                    <img src="./static/figures/object.jpg" 
+                                         class="img-fluid rounded mt-auto" 
+                                         alt="User Evaluation"
+                                         style="object-fit: contain;">
+                                    
+                                </div>
+                            </div>
+                        </div>             
+    
+                       
+                        <div class="card flex-grow-1">
+                            <div class="card-body">
+                                <h5 class="card-title">Results</h5>
+                                <div class="text-center h-100 d-flex flex-column">
+                                    <img src="./static/figures/experience2.jpg" 
+                                         class="img-fluid rounded mt-auto" 
+                                         alt="User Evaluation"
+                                         style="object-fit: contain;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- 右侧列 -->
+            
+                <div class="col-md-6">
+                    <div class="d-flex flex-column h-80 gap-4"> 
+                        <div class="card h-50">
+                            <div class="card-body h-100 d-flex flex-column">
+                                <h5 class="card-title">Results</h5>
+                                        <img src="./static/figures/experiencetwo.png" 
+                                            class="img-fluid rounded mt-auto" 
+                                            alt="User Evaluation"
+                                            style="object-fit: contain;">                            
+                                
+                            </div>
+                        </div>
+                        <div class="card h-50">
+                            <div class="card-body h-100 d-flex flex-column">
+                                <h5 class="card-title">Vedio</h5>
+                                <div class="ratio ratio-16x9">
+                                    <video controls poster="part1-poster.jpg" class="embed-responsive-item">
+                                        <!-- <source src="demo_part1.webm" type="video/webm"> -->
+                                        <source src="./static/videos/res.mp4" type="video/mp4">
+                                        
+                                    </video>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+
+        </div>
+    </section>
+    
+    <style>
+    /* 添加自定义样式 */
+    @media (min-width: 768px) {
+        .carousel-item {
+            min-height: 650px; /* 根据实际内容调整 */
+        }
+    }
+    </style>
+
+
+   
+    
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Tactile Reconstruction</h5>
+                    <p>A Practical Tactile Exploration with Enhanced Sampling for Fast Shape Estimation</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li>Yanmin Zhipeng</li>
+                        <li>Shanghai Research Institute
+                            for Intelligent Autonomous Systems, Tongji University</li>
+                        <li>yanmin.zhou@tongji.edu.cn</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">GitHub Repository</a></li>
+                        <li><a href="#" class="text-white">Dataset Download</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="small">© 2022 Shanghai Research Institute
+                        for Intelligent Autonomous Systems.
+
+                        </p>
+
+                </div>  
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-white">Privacy Policy</a> |
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
